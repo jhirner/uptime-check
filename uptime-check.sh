@@ -17,7 +17,7 @@ ip=$(curl --silent ifconfig.me)
 lossstr=$(ping -c 5 $ip -O |  grep 'packet loss' | awk -F ',' '{print $(NF-1)}')
 losspct=$(echo "$lossstr" | awk -F '%' '{print $1}')
 
-if [ $losspct -gt 0 ]; then
+if [ $losspct -lt 100 ]; then
      echo "Check PASSED. $losspct %  packet loss."
 else
      echo "Check FAILED. $losspct %  packet loss. Rebooting."
