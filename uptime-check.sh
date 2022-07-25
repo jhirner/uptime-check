@@ -18,8 +18,8 @@ lossstr=$(ping -c 5 $ip -O |  grep 'packet loss' | awk -F ',' '{print $(NF-1)}')
 losspct=$(echo "$lossstr" | awk -F '%' '{print $1}')
 
 if [ $losspct -lt 100 ]; then
-     echo "Check PASSED. $losspct %  packet loss."
+     echo "Check PASSED. Public IP is $ip. Found $losspct %  packet loss."
 else
-     echo "Check FAILED. $losspct %  packet loss. Rebooting."
+     echo "Check FAILED. Found $losspct %  packet loss. Rebooting."
      /usr/sbin/reboot
 fi
