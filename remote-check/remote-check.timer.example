@@ -2,7 +2,7 @@
 # after booting and again every 10 minutes afterwards.
 
 [Unit]
-Description=checking uptime by pinging public IP
+Description=monitoring uptime of remote server.
 
 [Timer]
 OnBootSec=10m

@@ -1,5 +1,5 @@
 [Unit]
-Description=Monitors uptime via pinging the public IP.
+Description=monitoring remote servers for connectivity via remote-check.sh.
 
 [Service]
 Type=simple
