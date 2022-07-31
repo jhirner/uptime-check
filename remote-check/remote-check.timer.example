@@ -1,0 +1,13 @@
+# In this example timer, the uptime-check script is executed 10 minutes
+# after booting and again every 10 minutes afterwards.
+
+[Unit]
+Description=checking uptime by pinging public IP
+
+[Timer]
+OnBootSec=10m
+OnUnitActiveSec=10m
+AccuracySec=1m
+
+[Install]
+WantedBy=timers.target

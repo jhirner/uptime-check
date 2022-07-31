@@ -1,0 +1,4 @@
+sendgrid_key=your-sendgrid-api-key-here
+monitor_addrs=(yourwebsite.com yourwebsite.net)
+alert_to=you@yourdomain.com
+alert_from=you@yourdomain.com

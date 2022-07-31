@@ -3,5 +3,5 @@ Description=Monitors uptime via pinging the public IP.
 
 [Service]
 Type=simple
-ExecStart=/absolute/path/to/script/uptime-check.sh
+ExecStart=/absolute/path/to/script/local-check.sh
 RestartSec=10m

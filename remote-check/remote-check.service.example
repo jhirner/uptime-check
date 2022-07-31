@@ -1,0 +1,7 @@
+[Unit]
+Description=Monitors uptime via pinging the public IP.
+
+[Service]
+Type=simple
+ExecStart=/absolute/path/to/script/remote-check.sh
+RestartSec=10m
