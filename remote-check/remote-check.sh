@@ -31,15 +31,20 @@ do
      elif [[ $status == 200 ]]; then
           servs_up+=($addr)
      else
-          servs_unk+=($addr)
+          servs_unk+=($addr "code" $status ";")
      fi
 done
+
+# Provide status information for logging purposes
+echo "Servers up:   " ${servs_up[@]}
+echo "Servers down: " ${servs_down[@]}
+echo "Other status: " ${servs_unk[@]}
 
 if [[ ${#servs_down[@]} -gt 0 || ${#servs_unk[@]} -gt 0 ]]; then
      curl --request POST \
      --url https://api.sendgrid.com/v3/mail/send \
      --header "Authorization: Bearer $sendgrid_key" \
      --header 'Content-Type: application/json' \
-     --data '{"personalizations": [{"to": [{"email": "'$alert_to'"}]}],"from": {"email": "'$alert_from'"},"subject": "Connectivity alert","content": [{"type": "text/plain", "value": "A problem was detected with the server."}]}'
+     --data '{"personalizations": [{"to": [{"email": "'$alert_to'"}]}],"from": {"email": "'$alert_from'"},"subject": "Connectivity alert","content": [{"type": "text/plain", "value": "One or more servers did not respond with OK. There could be a connectivity problem."}]}'
 
 fi
