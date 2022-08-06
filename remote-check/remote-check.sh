@@ -24,21 +24,16 @@ do
                                      # present. Get the last.
 
      # Based on status code, append to array of servers up, down, or other.
-     if [[ $status == 404 ]]; then
-          servs_down+=($addr)
-     elif [[ $status == "" ]]; then
-          servs_down+=($addr)
-     elif [[ $status == 200 ]]; then
+     if [[ $status == 200 ]]; then
           servs_up+=($addr)
      else
-          servs_unk+=($addr "code" $status ";")
+          servs_err+=($addr "code" $status ";")
      fi
 done
 
 # Provide status information for logging purposes
 echo "Servers up:   " ${servs_up[@]}
-echo "Servers down: " ${servs_down[@]}
-echo "Other status: " ${servs_unk[@]}
+echo "Other status: " ${servs_err[@]}
 
 if [[ ${#servs_down[@]} -gt 0 || ${#servs_unk[@]} -gt 0 ]]; then
      curl --request POST \
@@ -46,5 +41,4 @@ if [[ ${#servs_down[@]} -gt 0 || ${#servs_unk[@]} -gt 0 ]]; then
      --header "Authorization: Bearer $sendgrid_key" \
      --header 'Content-Type: application/json' \
      --data '{"personalizations": [{"to": [{"email": "'$alert_to'"}]}],"from": {"email": "'$alert_from'"},"subject": "Connectivity alert","content": [{"type": "text/plain", "value": "One or more servers did not respond with OK. There could be a connectivity problem."}]}'
-
 fi
